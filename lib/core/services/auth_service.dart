@@ -2,15 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
-  final FirebaseAuth _firebaseAuth;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  AuthService(this._firebaseAuth);
-
-  Stream<User> get authStateChanges => _firebaseAuth.idTokenChanges();
-
-  Future<void> signOut() async {
-    await _firebaseAuth.signOut();
-  }
+  // auth change user stream
+  Stream<String> get userUid => _auth.authStateChanges().map((user) => user?.uid);
 
   Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
@@ -27,5 +22,15 @@ class AuthService {
 
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
+  // sign out
+  Future signOut() async {
+    try {
+      return await _auth.signOut();
+    } catch (error) {
+      print(error.toString());
+      return null;
+    }
   }
 }

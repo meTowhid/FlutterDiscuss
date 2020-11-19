@@ -13,15 +13,15 @@ Future<void> main() async {
 class FlutterDiscussApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Discuss',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: StreamProvider<String>.value(
-        value: AuthService().userUid,
-        child: AuthWrapper(),
+    return StreamProvider<String>.value(
+      value: AuthService().userUid,
+      child: MaterialApp(
+        title: 'Flutter Discuss',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: AuthWrapper(),
       ),
     );
   }
